@@ -1,19 +1,20 @@
 <template>
     <header>
         <h1>
-            The
-            <strong>Cat</strong>picture
+            The<strong>Cat</strong>picture
         </h1>
     </header>
     <div class="container">
         <div class="like">
-            <button class="liked">love it</button>
+            <button @click="FavouriteCat" class="liked">love it</button>
         </div>
         <div class="not-like">
-            <button class="not-liked">nope it</button>
+            <button @click="GenCat" class="not-liked">nope it</button>
         </div>
     </div>
-    <img :src="catImg" :alt="catid">
+    <div class="imagecontainer">
+     <img  :src="catImg" :alt="catid">
+    </div>
 </template>
 
 <script>
@@ -21,13 +22,8 @@
 
 export default {
     
-    created() {
-        let apiurl = "https://api.thecatapi.com/v1/images/search"
-        this.axios.get(apiurl).then((response) => {
-            this.catImg = response.data[0].url
-            this.catId = response.data[0].id
-            console.log(response.data[0].id) 
-        })
+    mounted() {
+       this.GenCat()
     } ,
     
     data() {
@@ -37,7 +33,22 @@ export default {
         catId: ""}
        
     }
-   
+    , methods : {
+        GenCat(){
+            let apiurl = "https://api.thecatapi.com/v1/images/search"
+        this.axios.get(apiurl).then((response) => {
+            this.catImg = response.data[0].url
+            this.catId = response.data[0].id
+        })
+      }
+       , FavouriteCat(){
+            let cats = {catImg: this.catImg, 
+                        catId: this.catId}
+            this.axios.post('http://localhost:5000/cat',cats).then((response) => {
+                console.log(response);
+            })
+        }
+    }
 }
 </script>
 
@@ -89,5 +100,17 @@ button.not-liked {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+.imagecontainer{
+    
+    height: 30rem;
+    width: 40rem;
+    margin-top: 5px;
+    margin-left:25%;
+}
+img {
+  
+    height:inherit; 
+    width: inherit; 
 }
 </style>
