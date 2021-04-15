@@ -1,24 +1,43 @@
 <template>
     <header>
         <h1>
-            The<strong>Cat</strong>picture
+            The
+            <strong>Cat</strong>picture
         </h1>
     </header>
     <div class="container">
-    <div class="like">
-        <button class="liked">love it</button>
+        <div class="like">
+            <button class="liked">love it</button>
+        </div>
+        <div class="not-like">
+            <button class="not-liked">nope it</button>
+        </div>
     </div>
-    <div class="not-like">
-        <button class="not-liked">nope it</button>
-    </div>
-</div>
+    <img :src="catImg" :alt="catid">
 </template>
 
 <script>
 // @ is an alias to /src
 
 export default {
+    
+    created() {
+        let apiurl = "https://api.thecatapi.com/v1/images/search"
+        this.axios.get(apiurl).then((response) => {
+            this.catImg = response.data[0].url
+            this.catId = response.data[0].id
+            console.log(response.data[0].id) 
+        })
+    } ,
+    
+    data() {
 
+        return{
+        catImg: "",
+        catId: ""}
+       
+    }
+   
 }
 </script>
 
@@ -51,7 +70,7 @@ header :hover {
     color: #313131;
 }
 button.liked {
-    width:100px;
+    width: 100px;
     font-size: 30px;
     background-color: green;
 }
@@ -59,8 +78,7 @@ button.liked {
     background-color: #03631e;
 }
 button.not-liked {
-    
-    width:100px;
+    width: 100px;
     font-size: 30px;
     background-color: red;
 }
@@ -68,8 +86,8 @@ button.not-liked {
     background-color: #be0205;
 }
 .container {
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
     gap: 20px;
 }
 </style>
