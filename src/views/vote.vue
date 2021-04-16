@@ -1,10 +1,12 @@
 <template>
+  
     <header>
         <h1>
             The<strong>Cat</strong>picture
         </h1>
     </header>
-    <div class="container">
+    
+    <div class="container flex gap-5 justify-center ">
         <div class="like">
             <button @click="FavouriteCat" class="liked">love it</button>
         </div>
@@ -12,9 +14,13 @@
             <button @click="GenCat" class="not-liked">nope it</button>
         </div>
     </div>
-    <div class="imagecontainer">
-     <img  :src="catImg" :alt="catid">
+    <div class=" flex flex-col items-center " @mouseover="hovercat = true" @mouseleave ="hovercat = false">
+        
+     <img class="image " :src="catImg" >
+    
     </div>
+
+
 </template>
 
 <script>
@@ -30,7 +36,10 @@ export default {
 
         return{
         catImg: "",
-        catId: ""}
+        catId: "",
+        hovercat: false
+    
+}
        
     }
     , methods : {
@@ -48,11 +57,15 @@ export default {
                 console.log(response);
             })
         }
+        
     }
 }
 </script>
 
 <style language="scss">
+    body{
+        background-color:pink;
+    }
 * {
     margin: 0;
     padding: 0;
@@ -96,21 +109,16 @@ button.not-liked {
 .not-like :hover {
     background-color: #be0205;
 }
-.container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-.imagecontainer{
-    
-    height: 30rem;
+
+.image{
+   
+  
+    height: 25rem;
     width: 40rem;
     margin-top: 5px;
-    margin-left:25%;
+    
 }
-img {
+
   
-    height:inherit; 
-    width: inherit; 
-}
+    
 </style>

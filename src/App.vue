@@ -1,11 +1,14 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Vote</router-link> |
-    <router-link to="/breed">Breed</router-link>
-  </div>
+  <navi></navi>
   <router-view/>
 </template>
 
+<script>
+ import navi from "./components/navi.vue"
+ export default {
+   components: { navi }
+ }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
