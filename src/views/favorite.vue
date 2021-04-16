@@ -27,9 +27,7 @@
 export default {
 
     async mounted() {
-        let catinfo = await this.axios.get("http://localhost:5000/cat")
-
-        this.cats = catinfo.data;
+        this.getData()
     },
     data() {
         return {
@@ -38,12 +36,19 @@ export default {
     }
     ,
     methods: {
+        getData() {
+            this.axios.get("http://localhost:5000/cat").then(response =>{
+                    this.cats = response.data
 
-        async clicked(id) {
-            // let targeted = e.target.alt
-            
+            })
+        },
+         clicked(id) {
+             let targeted = id.target.alt
+            console.log(targeted);
           
-             this.axios.delete("http://localhost:5000/cat/"+id.target.alt)
+          this.axios.delete("http://localhost:5000/cat/"+targeted).then(() =>{
+              this.getData();
+            })
             
             
     }

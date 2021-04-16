@@ -55,6 +55,7 @@ export default {
                         catId: this.catId}
             this.axios.post('http://localhost:5000/cat',cats).then((response) => {
                 console.log(response);
+                this.GenCat();
             })
         }
         

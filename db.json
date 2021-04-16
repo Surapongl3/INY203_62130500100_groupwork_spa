@@ -1,9 +1,3 @@
 {
-  "cat": [
-    {
-      "catImg": "https://cdn2.thecatapi.com/images/bji.jpg",
-      "catId": "bji",
-      "id": 3
-    }
-  ]
+  "cat": []
 }
