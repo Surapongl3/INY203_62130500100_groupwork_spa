@@ -1,3 +1,19 @@
 {
-  "cat": []
+  "cat": [
+    {
+      "catImg": "https://cdn2.thecatapi.com/images/dn3.jpg",
+      "catId": "dn3",
+      "id": 1
+    },
+    {
+      "catImg": "https://cdn2.thecatapi.com/images/5A6g4xtZo.jpg",
+      "catId": "5A6g4xtZo",
+      "id": 2
+    },
+    {
+      "catImg": "https://cdn2.thecatapi.com/images/a2v.jpg",
+      "catId": "a2v",
+      "id": 3
+    }
+  ]
 }

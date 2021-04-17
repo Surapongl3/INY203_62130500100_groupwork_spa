@@ -9,13 +9,13 @@
             <h3 class="hover:text-red-600">Click Image to remove cat</h3>
         </header>
 
-        <div class="imagecontainer">
+        <div class="imagecontainer mx-3 ">
             <div class="grid grid-cols-3 gap-3">
                 <img
                     @click="clicked"
                     :src="cat.catImg"
                     :alt="cat.id"
-                    class="image h-full w-full"
+                    class="image h-full w-full hover:opacity-90 "
                     v-for="cat in cats"
                     :key="cat.id"
                 />
@@ -37,21 +37,21 @@ export default {
     ,
     methods: {
         getData() {
-            this.axios.get("http://localhost:5000/cat").then(response =>{
-                    this.cats = response.data
+            this.axios.get("http://localhost:5000/cat").then(response => {
+                this.cats = response.data
 
             })
         },
-         clicked(id) {
-             let targeted = id.target.alt
+        clicked(id) {
+            let targeted = id.target.alt
             console.log(targeted);
-          
-          this.axios.delete("http://localhost:5000/cat/"+targeted).then(() =>{
-              this.getData();
+
+            this.axios.delete("http://localhost:5000/cat/" + targeted).then(() => {
+                this.getData();
             })
-            
-            
-    }
+
+
+        }
     }
 }
 </script>

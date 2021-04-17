@@ -1,25 +1,60 @@
 <template>
-  <div class="breed bg-pink-300 h-screen">
-      <header>
-    <h2>Breed<strong>cat</strong></h2>
-  </header>
-      
-      <select name="breed" >
-        <option >breed</option>
-        
-      </select>
-    
-     
-    
+  <div class="breed">
+    <header>
+      <h2>
+        Breed
+        <strong>cat</strong>
+      </h2>
+    </header>
+
+    <select name="breed" >
   
-  <div class="img"> img-here</div>
-</div>
+        <option v-for="catdet in catDetail" :key="catdet[i]">{{ catdet.name }}</option>
+      </select>
+        <div v-for="catdets in catDetail" :key="catdets[i]">
+         {{catdets[i]}}
+     
+       </div>
+      
+   
+  </div>
 </template>
+<script>
+export default {
+
+  mounted() {
+    this.getCats();
+  }
+
+  , data() {
+    return {
+
+      catDetail: [],
+      i : 0
+    }
+  }
+
+  , methods: {
+    getCats() {
+      this.axios.get('https://api.thecatapi.com/v1/breeds').then(response => {
+        this.catDetail = response.data;
+        // console.log(this.catDetail[1].image.url);
+
+      })
+    }
+  }
+}
+
+
+</script>
 <style>
- h2 {
-   margin-top:  10px;
- } 
- header {
+body {
+  background-color: pink;
+}
+h2 {
+  margin-top: 10px;
+}
+header {
   padding-top: 50px;
   padding-bottom: 50px;
 }

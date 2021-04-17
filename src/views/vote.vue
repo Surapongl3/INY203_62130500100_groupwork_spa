@@ -1,72 +1,74 @@
 <template>
-  
     <header>
         <h1>
-            The<strong>Cat</strong>picture
+            The
+            <strong>Cat</strong>picture
         </h1>
     </header>
-    
-    <div class="container flex gap-5 justify-center ">
+
+    <div class="container flex gap-5 justify-center">
         <div class="like">
-            <button @click="FavouriteCat" class="liked">love it</button>
+            <button @click="FavouriteCat" class="liked text-white">love it</button>
         </div>
         <div class="not-like">
-            <button @click="GenCat" class="not-liked">nope it</button>
+            <button @click="GenCat" class="not-liked text-white">nope it</button>
         </div>
     </div>
-    <div class=" flex flex-col items-center " @mouseover="hovercat = true" @mouseleave ="hovercat = false">
-        
-     <img class="image " :src="catImg" >
-    
+    <div
+        class="flex flex-col items-center"
+        @mouseover="hovercat = true"
+        @mouseleave="hovercat = false"
+    >
+        <img class="image" :src="catImg" />
     </div>
-
-
 </template>
 
 <script>
 // @ is an alias to /src
 
 export default {
-    
+
     mounted() {
-       this.GenCat()
-    } ,
-    
+        this.GenCat()
+    },
+
     data() {
 
-        return{
-        catImg: "",
-        catId: "",
-        hovercat: false
-    
-}
-       
+        return {
+            catImg: "",
+            catId: "",
+            hovercat: false
+
+        }
+
     }
-    , methods : {
-        GenCat(){
+    , methods: {
+        GenCat() {
             let apiurl = "https://api.thecatapi.com/v1/images/search"
-        this.axios.get(apiurl).then((response) => {
-            this.catImg = response.data[0].url
-            this.catId = response.data[0].id
-        })
-      }
-       , FavouriteCat(){
-            let cats = {catImg: this.catImg, 
-                        catId: this.catId}
-            this.axios.post('http://localhost:5000/cat',cats).then((response) => {
+            this.axios.get(apiurl).then((response) => {
+                this.catImg = response.data[0].url
+                this.catId = response.data[0].id
+            })
+        }
+        , FavouriteCat() {
+            let cats = {                
+catImg: this.catImg,
+                catId: this.catId            
+}
+            this.axios.post('http://localhost:5000/cat', cats).then((response) => {
                 console.log(response);
                 this.GenCat();
             })
         }
-        
+
     }
 }
 </script>
 
 <style language="scss">
-    body{
-        background-color:pink;
-    }
+body {
+    background-color: pink;
+}
 * {
     margin: 0;
     padding: 0;
@@ -111,15 +113,9 @@ button.not-liked {
     background-color: #be0205;
 }
 
-.image{
-   
-  
+.image {
     height: 25rem;
     width: 40rem;
     margin-top: 5px;
-    
 }
-
-  
-    
 </style>
