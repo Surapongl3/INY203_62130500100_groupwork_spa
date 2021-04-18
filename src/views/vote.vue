@@ -1,4 +1,5 @@
 <template>
+    <div v-if="!isLoading">
     <header>
         <h1>
             The
@@ -19,8 +20,9 @@
         @mouseover="hovercat = true"
         @mouseleave="hovercat = false"
     >
-        <img class="image" :src="catImg" />
+        <img class="image" :src="catInfo.image.url" />
     </div>
+</div>
 </template>
 
 <script>
@@ -28,33 +30,34 @@
 
 export default {
 
-    mounted() {
-        this.GenCat()
+   async mounted() {
+       this.GenCat();
     },
 
     data() {
 
         return {
-            catImg: "",
-            catId: "",
+            catInfo: {},
+            isLoading: true,
             hovercat: false
 
         }
 
     }
     , methods: {
-        GenCat() {
-            let apiurl = "https://api.thecatapi.com/v1/images/search"
-            this.axios.get(apiurl).then((response) => {
-                this.catImg = response.data[0].url
-                this.catId = response.data[0].id
-            })
-        }
-        , FavouriteCat() {
-            let cats = {                
-catImg: this.catImg,
-                catId: this.catId            
-}
+        async GenCat() {
+            let apiurl = "https://api.thecatapi.com/v1/breeds"
+            let response =  await this.axios.get(apiurl)
+             let rand = Math.floor(Math.random() *response.data.length)
+                this.catInfo = response.data[rand]
+                console.log(this.catInfo.image.url);
+                this.isLoading = false;
+        },
+         FavouriteCat() {
+            let cats = {
+                   catImg : this.catInfo.image.url,
+                   catName : this.catInfo.name
+            }
             this.axios.post('http://localhost:5000/cat', cats).then((response) => {
                 console.log(response);
                 this.GenCat();

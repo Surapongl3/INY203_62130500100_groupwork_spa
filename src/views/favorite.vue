@@ -10,15 +10,14 @@
         </header>
 
         <div class="imagecontainer mx-3 ">
-            <div class="grid grid-cols-3 gap-3">
-                <img
-                    @click="clicked"
-                    :src="cat.catImg"
-                    :alt="cat.id"
-                    class="image h-full w-full hover:opacity-90 "
-                    v-for="cat in cats"
-                    :key="cat.id"
-                />
+            <div  class="grid grid-cols-3 gap-3">
+                
+            <catmodel  v-for="cat in cats"
+            :key="cat.id" :cat="cat"
+            @update="putCat"
+            @delete="deleteCat">
+        
+            </catmodel>
             </div>
         </div>
     </div>
@@ -31,7 +30,8 @@ export default {
     },
     data() {
         return {
-            cats: []
+            cats: [],
+           
         }
     }
     ,
@@ -42,15 +42,21 @@ export default {
 
             })
         },
-        clicked(id) {
-            let targeted = id.target.alt
-            console.log(targeted);
+        deleteCat(id) {
+       
+           
 
-            this.axios.delete("http://localhost:5000/cat/" + targeted).then(() => {
+            this.axios.delete("http://localhost:5000/cat/" + id).then(() => {
                 this.getData();
             })
 
 
+        },
+       async putCat({id,value,catImg}){
+              await  this.axios.put("http://localhost:5000/cat/"+id,{
+                       id,catImg,
+                        catName : value
+                })
         }
     }
 }

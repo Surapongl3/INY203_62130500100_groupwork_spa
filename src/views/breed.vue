@@ -7,14 +7,17 @@
       </h2>
     </header>
 
-    <select name="breed" >
-  
-        <option v-for="catdet in catDetail" :key="catdet[i]">{{ catdet.name }}</option>
-      </select>
-        <div v-for="catdets in catDetail" :key="catdets[i]">
-         {{catdets[i]}}
+    <div class="dropdown flex flex-col  items-center">
+      <button @click="showcontent = !showcontent" class="dropbtn bg-green-600 text-white w-40" >Dropdown</button>
+      <div  class="dropdown-content w-40 bg-white" v-for="catdet in catDetail" :key="catdet.id">
+        <a href="#/breed" v-show="showcontent"> {{catdet.name}}</a>
+      </div>
+      
+      <img :src="catImage" > 
+    </div>
+    
      
-       </div>
+     
       
    
   </div>
@@ -30,7 +33,9 @@ export default {
     return {
 
       catDetail: [],
-      i : 0
+      catImage:[],
+      index : Number,
+      showcontent: false
     }
   }
 
@@ -38,11 +43,20 @@ export default {
     getCats() {
       this.axios.get('https://api.thecatapi.com/v1/breeds').then(response => {
         this.catDetail = response.data;
-        // console.log(this.catDetail[1].image.url);
+      
+        
+        this.catImage   = response.data[this.index].image.url
+        console.log(this.catImage);
 
       })
+    },
+    setIndex(i){
+        this.index = i;
     }
-  }
+   
+    
+  
+}
 }
 
 
@@ -71,4 +85,7 @@ header strong {
 header :hover {
   color: #313131;
 }
+
+
+
 </style>
